@@ -4,11 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
 class Product extends Model
 {
     use HasFactory;
-
+    protected $fillable = ['name' , 'quantity' , 'price'];
 
     public function toArray()
     {
@@ -17,7 +16,23 @@ class Product extends Model
             'name'=>$this->name,
             'price'=>$this->price,
             'quantity'=>$this->quantity,
-            'image'=>$this->image,
+            'image'=>$this->images,
+            'category' => $this->category,
+
         ];
     }
+
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    public function images()
+    {
+        return $this->hasMany(ProductImages::class);
+    }
+
+
+
 }

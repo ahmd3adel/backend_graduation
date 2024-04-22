@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\API\V1\CategoryController;
+use App\Http\Controllers\API\V1\OrderController;
+use App\Http\Controllers\API\V1\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\API\V1\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,4 +22,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-Route::get('products' , [ProductController::class , 'index']);
+//Route::get('products' , [ProductController::class , 'index']);
+//Route::post('/admin/access' , [\App\Http\Controllers\API\AccessTokenController::class , 'store']);
+Route::apiResource('products' , ProductController::class);
+Route::apiResource('categories' , CategoryController::class);
+Route::apiResource('orders' , OrderController::class);

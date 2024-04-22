@@ -21,12 +21,11 @@ class ProductFactory extends Factory
         return [
             'name' => fake()->name,
             'description' => fake()->text,
-            'price' => fake()->randomFloat(2, 10, 1000),
+            'price' => fake()->numberBetween(1, 100),
             'quantity' => fake()->numberBetween(1, 100),
             'dimensions' => fake()->text,
             'category_id' => Category::all()->random()->id,
             'supplier_id' => Supplier::all()->random()->id,
-            'image' => fake()->imageUrl(), // Assuming the image field represents a URL to an image
             'status' => fake()->randomElement(['active', 'inactive']),
         ];
     }

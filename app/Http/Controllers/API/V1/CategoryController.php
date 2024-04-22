@@ -3,20 +3,20 @@
 namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class ProductController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
-        // Retrieve products with associated images and categories
-        $productsWithCategories = Product::with(['images:id,product_id,filename,path', 'category:id,name'])->get();
-        return $productsWithCategories;
+        $categoriesWithProducts = Category::with('products')->get();
+        return $categoriesWithProducts;
     }
 
     /**
@@ -24,13 +24,13 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $product = Product::create([
+        $category = Category::create([
             'name' => $request->input('name'),
             'quantity' => $request->input('quantity'),
             'price' => $request->input('price'),
         ]);
 
-        return response()->json(['message' => 'Product created successfully', 'product' => $product]);
+        return response()->json(['message' => 'Product created successfully', 'product' => $category]);
     }
 
     /**
@@ -38,13 +38,13 @@ class ProductController extends Controller
      */
     public function show(string $id)
     {
-        $product = Product::find($id);
+        $category = Category::with('products')->find($id);
 
-        if (!$product) {
+        if (!$category) {
             return response()->json(['message' => 'Product not found'], Response::HTTP_NOT_FOUND);
         }
 
-        return response()->json($product);
+        return response()->json($category);
     }
 
     /**
@@ -52,30 +52,29 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $product = Product::find($id);
+        $category = Category::find($id);
 
-        if (!$product) {
+        if (!$category) {
             return response()->json(['message' => 'Product not found'], Response::HTTP_NOT_FOUND);
         }
 
-        $product->update($request->all());
+        $category->update($request->all());
 
-        return response()->json(['message' => 'Product updated successfully', 'product' => $product]);
+        return response()->json(['message' => 'Product updated successfully', 'product' => $category]);
     }
-
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
-        $product = Product::find($id);
+        $category = Category::find($id);
 
-        if (!$product) {
+        if (!$category) {
             return response()->json(['message' => 'Product not found'], Response::HTTP_NOT_FOUND);
         }
+        $category->products()->delete();
+        $category->delete();
 
-        $product->delete();
-
-        return response()->json(['message' => 'Product deleted successfully', 'product' => $product]);
+        return response()->json(['message' => 'category deleted successfully']);
     }
 }
