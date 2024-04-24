@@ -42,7 +42,7 @@ class UserController extends Controller
             'name' => $request->input('name'),
             'email' => $request->input('email'),
             'password' => Hash::make($request->input('password')),
-            'role' => $request->input('role'),
+            'role' => 'user',
             'status' => $request->input('status'),
             'avatar' => $request->input('avatar'),
             'birthdate' => $request->input('birthdate'),

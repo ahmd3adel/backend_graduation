@@ -33,7 +33,8 @@ class AccessTokenController extends Controller
 
             $deviceName = $request->post('device_name', $request->userAgent());
             $token = $user->createToken($deviceName)->plainTextToken;
-            return response()->json(['message' => 'The token was successfully created', 'token' => $token], 201);
+            return Response::json(['message' => "login has done",'user' => $user , 'token' => $token]);
+//            return response()->json(['message' => 'The token was successfully created', 'token' => $token], 201);
         }
 
         return response()->json(['message' => 'Invalid credentials'], 401);

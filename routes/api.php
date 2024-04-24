@@ -27,15 +27,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
-
 Route::apiResource('products' , ProductController::class);
 Route::apiResource('categories' , CategoryController::class);
 Route::apiResource('orders' , OrderController::class);
-Route::post('auth/access-token' , [AccessTokenController::class , 'store'])
+Route::post('auth/login' , [AccessTokenController::class , 'store'])
     ->middleware('guest:sanctum')->name('login');
 Route::post('auth/register', [RegisterController::class, 'store']);
 Route::apiResource('users' , UserController::class);
 Route::apiResource('reviews' , ReviewController::class)->middleware('auth:sanctum');
 Route::apiResource('cart' , ShoppingCartController::class)->middleware('auth:sanctum');
+Route::apiResource('shipping-information' , ShoppingCartController::class);
 
