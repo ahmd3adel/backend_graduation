@@ -20,11 +20,12 @@ return new class extends Migration
             $table->string('dimensions')->nullable();
             $table->foreignId('category_id')->default(1);
             $table->foreignId('supplier_id')->default(1);
-//            $table->string('image')->nullable();
+            $table->foreignId('order_id')->default(1);
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamps();
-            $table->foreign('category_id')->references('id')->on('categories');
-            $table->foreign('supplier_id')->references('id')->on('suppliers');
+            $table->foreign('category_id')->references('id')->on('categories')->cascadeOnDelete();
+            $table->foreign('supplier_id')->references('id')->on('suppliers')->cascadeOnDelete();
+            $table->foreign('order_id')->references('id')->on('orders')->cascadeOnDelete();
         });
     }
 

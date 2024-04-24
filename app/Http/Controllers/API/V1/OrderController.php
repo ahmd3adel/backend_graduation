@@ -15,8 +15,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $ordersWithUsersAndProducts = Order::with(['user:id,name'])->get();
-//          $ordersWithUsersAndProducts = Order::all();
+        $ordersWithUsersAndProducts = Order::with(['user:id,name', 'products'])->get();
         return $ordersWithUsersAndProducts;
     }
 
@@ -42,7 +41,7 @@ class OrderController extends Controller
      */
     public function show(string $id)
     {
-        $order = Order::with('products')->find($id);
+        $order = Order::with(['user'])->find($id);
 
         if (!$order) {
             return response()->json(['message' => 'Product not found'], Response::HTTP_NOT_FOUND);
@@ -77,7 +76,6 @@ class OrderController extends Controller
         if (!$order) {
             return response()->json(['message' => 'order not found'], Response::HTTP_NOT_FOUND);
         }
-//        $order->products()->delete();
         $order->delete();
 
         return response()->json(['message' => 'order deleted successfully']);

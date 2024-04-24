@@ -1,8 +1,14 @@
 <?php
 
+use App\Http\Controllers\API\V1\AccessTokenController;
 use App\Http\Controllers\API\V1\CategoryController;
 use App\Http\Controllers\API\V1\OrderController;
 use App\Http\Controllers\API\V1\ProductController;
+use App\Http\Controllers\API\V1\RegisterController;
+use App\Http\Controllers\API\V1\ReviewController;
+use App\Http\Controllers\API\V1\ShoppingCartController;
+use App\Http\Controllers\API\V1\UserController;
+use App\Models\Review;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,8 +28,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-//Route::get('products' , [ProductController::class , 'index']);
-//Route::post('/admin/access' , [\App\Http\Controllers\API\AccessTokenController::class , 'store']);
+
 Route::apiResource('products' , ProductController::class);
 Route::apiResource('categories' , CategoryController::class);
 Route::apiResource('orders' , OrderController::class);
+Route::post('auth/access-token' , [AccessTokenController::class , 'store'])
+    ->middleware('guest:sanctum')->name('login');
+Route::post('auth/register', [RegisterController::class, 'store']);
+Route::apiResource('users' , UserController::class);
+Route::apiResource('reviews' , ReviewController::class)->middleware('auth:sanctum');
+Route::apiResource('cart' , ShoppingCartController::class)->middleware('auth:sanctum');
+

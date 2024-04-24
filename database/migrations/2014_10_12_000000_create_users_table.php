@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->enum('role' , ['supervisor' , 'moderator']);
+            $table->enum('role' , ['admin' , 'supervisor' , 'moderator' , 'member']);
             $table->enum('status' , ['active' , 'inactive']);
             $table->string('avatar')->nullable();
             $table->string('birthdate')->nullable();

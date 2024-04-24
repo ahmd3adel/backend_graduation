@@ -19,11 +19,12 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             CategorySeeder::class,
-            // Other seeders you want to run
         ]);
 
        \App\Models\Product::factory(15)->create();
        \App\Models\ProductImages::factory(50)->create();
+       \App\Models\Review::factory(50)->create();
+       \App\Models\ShoppingCart::factory(50)->create();
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',

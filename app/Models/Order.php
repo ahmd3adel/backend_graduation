@@ -18,6 +18,11 @@ class Order extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
+
     public function toArray()
     {
         return [
@@ -27,7 +32,7 @@ class Order extends Model
             'payment_status' => $this->payment_status,
             'shipping_address' => $this->shipping_address,
             'user' => $this->user,
-
+            'products' => $this->products
         ];
     }
 }
